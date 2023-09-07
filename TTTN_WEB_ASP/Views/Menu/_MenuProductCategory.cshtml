@@ -1,0 +1,26 @@
+﻿@model IEnumerable<TTTN_WEB_ASP.Models.EF.ProductCategory>
+
+@if (Model != null && Model.Any())
+{
+    <div class="site-section">
+        <div class="row text-center">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-3">
+                    <div class="border">
+                        <div class="product_imageb" style="border:1px solid #808080">
+                            <a href="/danh-muc-san-pham/@item.Alias-@(item.Id)">
+                                <img src="/PublicImage/Menuproductcategory/@item.Icon" style="width: 100%; height: auto; max-width: 330px; max-height: 430px; margin-top:15px;" />
+                            </a>
+
+                        </div>
+                        <a href="/danh-muc-san-pham/@item.Alias-@(item.Id)" class="Category btn btn-light">@item.Title</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+}
+
+

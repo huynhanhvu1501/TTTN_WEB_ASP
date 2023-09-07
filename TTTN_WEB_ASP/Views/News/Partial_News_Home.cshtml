@@ -1,0 +1,36 @@
+﻿@model IEnumerable<TTTN_WEB_ASP.Models.EF.News>
+@if (Model != null && Model.Any())
+{
+    <div class="news-updates">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-heading">
+                        <h2 class="text-black">Tin tức mới &amp; Cập nhật</h2>
+                    </div>
+                    <a href="/tin-tuc">Xem tất cả</a>
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-lg-3">
+                                <div class="post-entry-big">
+                                    <a href="/@item.Alias-n@(item.Id)" class="img-link"><img src="@item.Image" alt="Image" class="img-fluid"></a>
+                                    <div class="post-content">
+                                        <div class="post-meta">
+                                            <a >@item.CreatedDate.ToString("MMM dd,yyyy")</a>
+                                            <span class="mx-1">/</span>
+                                            <a >@item.CreatedBy</a> <a >@item.SeoKeywords</a>
+                                        </div>
+                                        <h3 class="post-heading"><a href="/@item.Alias-n@(item.Id)">@item.Title</a></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+              
+            </div>
+        </div>
+    </div>
+}

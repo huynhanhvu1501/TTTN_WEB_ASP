@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ShopVuHuynh</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="~/Content/assets/images/lo1.png" rel="shortcut icon" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/assets/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="~/Content/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/assets/css/jquery-ui.css">
+    <link rel="stylesheet" href="~/Content/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Content/assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/Content/assets/css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="~/Content/assets/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="~/Content/assets/fonts/flaticon/font/flaticon.css">
+    <link href="~/Content/assets/css/aos.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
+    <link href="~/Content/assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+    <link rel="stylesheet" href="~/Content/assets/css/style.css">
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    @*@RenderSection("css", required: false)*@
+    <link href="~/Content/assets/styles/responsive.css" rel="stylesheet" />
+    <script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+    <div class="site-wrap">
+        <div class="site-mobile-menu site-navbar-target">
+            <div class="site-mobile-menu-header">
+                <div class="site-mobile-menu-close mt-3">
+                    <span class="icon-close2 js-menu-toggle"></span>
+                </div>
+            </div>
+            <div class="site-mobile-menu-body"></div>
+        </div>
+
+        <div class="py-2 bg-light">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-9 d-none d-lg-block">
+                        @using (Html.BeginForm("Index", "Products", FormMethod.Get, new { }))
+                        {
+                            <div class="input-group input-group-sm">
+                                @Html.TextBox("Searchtext", null, new { @class = "form-control" })
+                                <span class="input-group-append">
+                                    <button type="submit" class="btn btn-info btn-flat">Tìm kiếm</button>
+                                </span>
+                            </div>
+                        }
+                    </div>
+                    @if (!Request.IsAuthenticated)
+                    {
+                        <div class="col-lg-3 text-right">
+                            <a href="/account/login" class="small mr-3"><span class="icon-unlock-alt"></span> Đăng nhập</a>
+                            <a href="/account/register" class="small btn btn-primary px-4 py-2 rounded-0"><span class="icon-users"></span> Đăng ký</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-3 text-right">
+                            <a href="/" class="small mr-3"><span class="icon-users"></span>Xin chào: @User.Identity.Name</a>
+                            <a href="javascript:document.getElementById('logOffForm').submit()" class="small btn btn-primary px-4 py-2 rounded-0"><span></span> Đăng xuất</a>
+                        </div>
+                    }
+
+                </div>
+                @if (Request.IsAuthenticated)
+                {
+                    <div style="display:none">
+                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { @id = "logOffForm" }))
+                        {
+                            @Html.AntiForgeryToken()}
+                    </div>}
+            </div>
+        </div>
+
+        <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
+            <div class="container">
+                <div class="d-flex align-items-center">
+                    <div class="site-logo">
+                        <a href="/" class="d-block">
+                            <img src="~/Content/assets/images/2.jpg" style=" width:200px; height:80px" alt="Image" class="img-fluid">
+                        </a>
+                    </div>
+
+                    @Html.Action("MenuTop", "Menu")
+                    <div class="ml-auto">
+                        <div class="social-wrap">
+                            <ul class="navbar_user">
+                                
+                                @*<li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>*@
+                                <li class="checkout">
+                                    <a href="/gio-hang">
+                                        <i class="icon-add_shopping_cart" aria-hidden="true"><span id="checkout_items" class="checkout_items">0</span></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+        @RenderBody()
+
+        @Html.Action("Partial_Sub", "Home")
+
+
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <p class="mb-4"><img src="~/Content/assets/images/2.jpg" alt="Image" class="img-fluid"></p>
+                        <p>Nội dung trên trang này được bảo vệ bản quyền và là tài sản của VuHuynhShop.</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <h3 class="footer-heading"><span>Thông tin liên hệ</span></h3>
+                        <ul class="list-unstyled">
+                            <li><a>+Tên: Huỳnh Anh Vũ</a></li>
+                            <li><a>+DT: 0328.953.710</a></li>
+                            <li><a>+Email: vuhuynh1512001@gmail.com</a></li>
+                            <li><a>+Địa chỉ: Số 20 đường Tăng Nhơn Phú, phường Phước Long B,Thành Phố Thủ Đức</a></li>
+
+                        </ul>
+                    </div>
+                 
+                    <div class="col-lg-4">
+                        <h3 class="footer-heading "><span>Vị trí</span></h3>
+                        <div class="container contact_container">
+                            <div class="row">
+                                <div class="col">
+                                    <div id="google_map">
+                                        <div class="map_container">
+                                            <div id="map">
+                                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.7516950748936!2d106.77240387460388!3d10.830304558198486!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752701a34a5d5f%3A0x30056b2fdf668565!2zVHLGsOG7nW5nIENhbyDEkOG6s25nIEPDtG5nIFRoxrDGoW5nIFRQLkhDTQ!5e0!3m2!1svi!2s!4v1692760749786!5m2!1svi!2s" width="350" height="200" style="border:4px solid #00ff21;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="copyright">
+                            <p>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> Mọi quyền được bảo lưu | Mẫu này được thực hiện với <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Vũ Huỳnh</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+        
+            <!-- .site-wrap -->
+            <!-- loader -->
+            <div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#51be78" /></svg></div>
+            <script src="~/Content/assets/js/jquery-3.3.1.min.js"></script>
+            <script src="~/Content/assets/js/jquery-migrate-3.0.1.min.js"></script>
+            <script src="~/Content/assets/js/jquery-ui.js"></script>
+            <script src="~/Content/assets/js/popper.min.js"></script>
+            <script src="~/Content/assets/js/bootstrap.min.js"></script>
+            <script src="~/Content/assets/js/owl.carousel.min.js"></script>
+            <script src="~/Content/assets/js/jquery.stellar.min.js"></script>
+            <script src="~/Content/assets/js/jquery.countdown.min.js"></script>
+            <script src="~/Content/assets/js/bootstrap-datepicker.min.js"></script>
+            <script src="~/Content/assets/js/jquery.easing.1.3.js"></script>
+            <script src="~/Content/assets/js/aos.js"></script>
+            <script src="~/Content/assets/js/jquery.fancybox.min.js"></script>
+            <script src="~/Content/assets/js/jquery.sticky.js"></script>
+            <script src="~/Content/assets/js/jquery.mb.YTPlayer.min.js"></script>
+            <script src="~/content/assets/js/custom.js"></script>
+            <script src="~/Content/assets/plugins/Isotope/isotope.pkgd.min.js"></script>
+            <script src="~/Content/assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+            <script src="~/Content/assets/plugins/easing/easing.js"></script>
+            <script src="~/Content/assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+            <script src="~/Scripts/jquery.validate.min.js"></script>
+            <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+            <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+            <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+            <script src="~/Content/assets/js/main.js"></script>
+            <script src="~/Scripts/JsShopping.js"></script>
+            @RenderSection("scripts", required: false)
+    </body>
+</html>

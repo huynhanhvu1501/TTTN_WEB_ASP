@@ -1,0 +1,34 @@
+﻿
+@model IEnumerable<TTTN_WEB_ASP.Models.ShoppingCartItem>
+@using TTTN_WEB_ASP.Common
+
+@{
+    ViewBag.Title = "Giỏ hàng";
+}
+
+@if (Model != null && Model.Any())
+{
+    <h5 style="border: 1px solid #000000; text-align:center;">TÊN HÀNG<span style="margin-left: 70px; color: #ff0000;">SL: @Model.Count()</span></h5>
+    var i = 0;
+    var tongtien = decimal.Zero;
+<div>
+    <table class="table" >
+        @foreach (var item in Model)
+        {
+            tongtien += item.TotalPrice;
+            <tr class="text-center" >
+                <td style="border:1px solid #000000">@item.ProductName</td>
+                <td style="border:1px solid #000000; color: #ff0000;">@Common.FormatNumber(item.Price, 0)</td>
+            </tr>
+        }
+        <tr class="text-center">
+            <td style="border: 1px solid #000000; color: #ff6a00">Tổng tiền</td>
+            <td style="border: 1px solid #000000; color: #ff6a00;">@Common.FormatNumber(tongtien, 0)</td>
+        </tr>
+    </table>
+</div>
+}
+else
+{
+
+}

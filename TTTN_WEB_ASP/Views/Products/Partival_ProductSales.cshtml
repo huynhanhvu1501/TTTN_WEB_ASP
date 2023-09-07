@@ -1,0 +1,59 @@
+﻿@model IEnumerable<TTTN_WEB_ASP.Models.EF.Product>
+@using TTTN_WEB_ASP.Common
+@if (Model != null && Model.Any())
+{
+    <div class="site-section">
+        <div class="container">
+            <div class="row mb-3 justify-content-center text-center">
+                <div class="col-lg-6 mb-5">
+                    <h2 class="section-title-underline mb-3">
+                        <span>Giảm giá</span>
+                    </h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="owl-slide-3 owl-carousel">
+
+                        @foreach (var item in Model)
+                        {
+                            var strImage = "";
+                            var img = item.ProductImage.FirstOrDefault(x => x.IsDefault);
+                            if (img != null)
+                            {
+                                strImage = img.Image;
+                            }
+
+
+                            <div class="course-1-item text-center">
+                                <figure class="thumnail">
+                                    @if (item.PriceSale > 0)
+                                    {
+                                        <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>Sale</span></div>
+
+                                    }
+                                    <a href="/chi-tiet/@item.Alias-p@(item.Id)"><img src="@strImage" alt="Image" class="img-fluid"></a>
+                                    @if (item.PriceSale > 0)
+                                    {
+                                        <div class="product_price">@Common.FormatNumber(item.Price, 0)<span>@Common.FormatNumber(item.PriceSale, 0)</span></div>
+                                    }
+                                    else
+                                    {
+                                        <div class="product_price">@Common.FormatNumber(item.Price, 0)</div>
+                                    }
+                                    <div style="text-align:center;" class=" btn-light"><a href="/chi-tiet/@item.Alias-p@(item.Id)">@item.Title</a></div>
+                                </figure>
+                                <h2>@item.SeoDescription</h2>
+
+                                <div class="course-1-content">
+                                    <div class="Category btn btn-light "><a  class="btnAddToCart" data-id="@item.Id" href="#">Thêm vào giỏ hàng</a></div>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
